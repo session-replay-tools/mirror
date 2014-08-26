@@ -1,0 +1,24 @@
+
+# Copyright (C) bin wang
+# Copyright (C) NetEase, Inc.
+
+echo
+echo "Configuration summary"
+
+
+echo
+
+
+cat << END
+  mirror path prefix: "$TC_PREFIX"
+  mirror binary file: "$TC_SBIN_PATH"
+  mirror configuration prefix: "$TC_CONF_PREFIX"
+  mirror configuration file: "$TC_CONF_PATH"
+  mirror pid file: "$TC_PID_PATH"
+END
+
+if test -n "$TC_ERROR_LOG_PATH"; then
+  echo "  mirror error log file: \"$TC_ERROR_LOG_PATH\""
+else
+  echo "  mirror logs errors to stderr"
+fi
