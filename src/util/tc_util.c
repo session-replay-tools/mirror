@@ -1,25 +1,6 @@
 
 #include <xcopy.h>
 
-unsigned short
-csum(unsigned short *pack, int len) 
-{ 
-    register unsigned long sum = 0; 
-
-    while (len > 1) {
-        sum += *(pack++); 
-        len -= 2; 
-    } 
-    if (len > 0) {
-        sum += *(unsigned char *) pack; 
-    }
-    while (sum >> 16) {
-        sum = (sum & 0xffff) + (sum >> 16); 
-    }
-
-    return (unsigned short) ~sum; 
-} 
-
 
 int
 retrieve_devices(char *raw_device, devices_t *devices)

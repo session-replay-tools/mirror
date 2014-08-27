@@ -8,7 +8,6 @@ CORE_DEPS="src/core/xcopy.h \
            src/core/tc_config.h \
            src/core/tc_alloc.h \
            src/core/tc_palloc.h \
-           src/core/tc_array.h \
            src/core/tc_rbtree.h \
            src/core/tc_log.h \
            src/core/tc_time.h \
@@ -18,7 +17,6 @@ CORE_DEPS="src/core/xcopy.h \
 CORE_SRCS="src/core/tc_alloc.c \
            src/core/tc_log.c \
            src/core/tc_palloc.c \
-           src/core/tc_array.c \
            src/core/tc_signal.c \
            src/core/tc_time.c \
            src/core/tc_rbtree.c \

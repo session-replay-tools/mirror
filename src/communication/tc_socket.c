@@ -168,21 +168,3 @@ int tc_pcap_over(void)
 }
 
 
-
-int
-tc_socket_set_nonblocking(int fd)
-{
-    int flags;
-
-    flags = fcntl(fd, F_GETFL, 0);
-    if (flags < 0) {
-        return TC_ERR;
-    }
-
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) {
-        return TC_ERR;
-    }
-
-    return TC_OK;
-}
-

@@ -33,12 +33,7 @@
 
 #define VERSION "1.0.0"  
 
-typedef struct tc_cmd_s         tc_cmd_t;
-typedef struct tc_module_s      tc_module_t;
 typedef struct tc_pool_s        tc_pool_t;
-typedef struct tc_buf_s         tc_buf_t;
-typedef struct tc_array_s       tc_array_t;
-typedef struct tc_sess_s        tc_sess_t;
 
 
 #define ETHER_ADDR_LEN 0x6
@@ -151,7 +146,6 @@ int daemonize(void);
 #include <tc_alloc.h>
 #include <tc_palloc.h>
 #include <tc_event.h>
-#include <tc_array.h>
 #include <tc_select_module.h>
 #include <tc_event_timer.h>
 
