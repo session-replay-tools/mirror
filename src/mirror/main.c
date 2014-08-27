@@ -24,10 +24,14 @@ usage(void)
     printf("mirror " VERSION "\n");
     printf("-s <mac_addr>  the MAC address of the interface where packets are going out\n");
     printf("-t <mac_addr>  the target MAC address which is also the next hop's MAC address\n");
+    printf("-x <ip_addr>   change the destination ip address of the packet.\n"
+           "               You could use any IP address except the online server's IP address\n"
+           "               and the target server's IP address.\n");
     printf("-i <device,>   The name of the interface to listen on. This is usually a driver\n"
            "               name followed by a unit number, for example eth0 for the first\n"
            "               Ethernet interface.\n");
-    printf("-F <filter>    user filter (same as pcap filter)\n");
+    printf("-F <filter>    use filter (same as pcap filter) to capture ingress packets.\n"
+           "               Don't capture all packets or the packets which are sent by mirror itself\n");
     printf("-B <num>       buffer size for pcap capture in megabytes(default 16M)\n");
     printf("-o <device,>   The name of the interface to send. This is usually a driver\n"
            "               name followed by a unit number, for example eth0 for the first\n"
@@ -220,13 +224,29 @@ set_details()
         return -1;
     }
 
+    if (clt_settings.raw_device != NULL) {
+        tc_log_info(LOG_NOTICE, 0, "device:%s", clt_settings.raw_device);
+        if (strcmp(clt_settings.raw_device, DEFAULT_DEVICE) == 0) {
+            clt_settings.raw_device = NULL; 
+        } else {
+            retrieve_devices(clt_settings.raw_device, &(clt_settings.devices));
+        }
+    }
+
     if (clt_settings.raw_target_ip != NULL) {
         tc_log_info(LOG_NOTICE, 0, "target ip:%s", clt_settings.raw_target_ip);
         clt_settings.target_ip = inet_addr(clt_settings.raw_target_ip);
     } else {
-        tc_log_info(LOG_ERR, 0, "no -x argument");
-        fprintf(stderr, "set the target ip\n");
-        return -1;
+        if (clt_settings.raw_device == NULL || 
+                clt_settings.devices.device_num > 1 || 
+                !strcmp(clt_settings.raw_device, clt_settings.output_if_name)) 
+        {
+            tc_log_info(LOG_ERR, 0, "no -x argument");
+            fprintf(stderr, "set the target ip\n");
+            return -1;
+        }
+        
+        tc_log_info(LOG_WARN, 0, "be caution: no -x argument");
     }
 
     if (clt_settings.raw_dmac != NULL) {
@@ -247,14 +267,6 @@ set_details()
         return -1;
     }
 
-    if (clt_settings.raw_device != NULL) {
-        tc_log_info(LOG_NOTICE, 0, "device:%s", clt_settings.raw_device);
-        if (strcmp(clt_settings.raw_device, DEFAULT_DEVICE) == 0) {
-            clt_settings.raw_device = NULL; 
-        } else {
-            retrieve_devices(clt_settings.raw_device, &(clt_settings.devices));
-        }
-    }
 
     if (clt_settings.user_filter != NULL) {
         tc_log_info(LOG_NOTICE, 0, "user filter:%s", clt_settings.user_filter);
