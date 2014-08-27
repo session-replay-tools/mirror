@@ -11,10 +11,12 @@ typedef struct xcopy_clt_settings {
     devices_t      devices;
     tc_pool_t     *pool;
 
+    uint32_t       target_ip;
     unsigned char  smac[ETHER_ADDR_LEN];
     unsigned char  dmac[ETHER_ADDR_LEN];
     char          *raw_smac;
     char          *raw_dmac;
+    char          *raw_target_ip;
     char          *user_filter;
     char          *output_if_name;
     char          *pid_file;             /* pid file */

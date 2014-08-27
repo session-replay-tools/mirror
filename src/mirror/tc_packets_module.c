@@ -104,6 +104,7 @@ pcap_retrieve(unsigned char *args, const struct pcap_pkthdr *pkt_hdr,
 {
     int                  l2_len, ip_pack_len, frame_len, ret;
     pcap_t              *pcap;
+    tc_iph_t            *ip;
     unsigned char       *ip_data; 
     struct ethernet_hdr *ether;
 
@@ -142,6 +143,8 @@ pcap_retrieve(unsigned char *args, const struct pcap_pkthdr *pkt_hdr,
 
     if (ip_pack_len <= clt_settings.mtu) {
         fill_frame(ether, clt_settings.smac, clt_settings.dmac);
+        ip = (tc_iph_t *) ip_data;
+        ip->daddr = clt_settings.target_ip;
         ret = tc_pcap_snd(frame, ip_pack_len + ETHERNET_HDR_LEN);
         if (ret == TC_ERR) {
             tc_log_info(LOG_WARN, 0, "pcap send error");
@@ -219,6 +222,8 @@ special_disp_packet(unsigned char *packet, int ip_rcv_len)
         memcpy(p, (char *) (packet + index), payload_len);
         index = index + payload_len;
         
+        ip->daddr = clt_settings.target_ip;
+
         ret = tc_pcap_snd(clt_settings.pack_buffer, 
                 pack_len + ETHERNET_HDR_LEN);
         if (ret == TC_ERR) {

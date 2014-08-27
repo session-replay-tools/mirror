@@ -92,6 +92,7 @@ read_args(int argc, char **argv)
     while (-1 != (c = getopt(argc, argv,
          "s:" 
          "t:" 
+         "x:" 
          "i:" /* <device,> */
          "F:" /* <filter> */
          "B:" 
@@ -110,6 +111,9 @@ read_args(int argc, char **argv)
                 break;
             case 't':
                 clt_settings.raw_dmac = optarg;
+                break;
+            case 'x':
+                clt_settings.raw_target_ip = optarg;
                 break;
             case 'o':
                 clt_settings.output_if_name = optarg;
@@ -152,6 +156,10 @@ read_args(int argc, char **argv)
                         break;
                     case 't':
                         fprintf(stderr, "mirror: option -%c require a mac address\n", 
+                                optopt);
+                        break;
+                    case 'x':
+                        fprintf(stderr, "mirror: option -%c require a ip address\n", 
                                 optopt);
                         break;
                     case 'l':
@@ -212,7 +220,17 @@ set_details()
         return -1;
     }
 
+    if (clt_settings.raw_target_ip != NULL) {
+        tc_log_info(LOG_NOTICE, 0, "target ip:%s", clt_settings.raw_target_ip);
+        clt_settings.target_ip = inet_addr(clt_settings.raw_target_ip);
+    } else {
+        tc_log_info(LOG_ERR, 0, "no -x argument");
+        fprintf(stderr, "set the target ip\n");
+        return -1;
+    }
+
     if (clt_settings.raw_dmac != NULL) {
+        tc_log_info(LOG_NOTICE, 0, "target mac:%s", clt_settings.raw_dmac);
         convert_str_to_mac(clt_settings.dmac, clt_settings.raw_dmac);
     } else {
         tc_log_info(LOG_ERR, 0, "no -t argument");
@@ -221,6 +239,7 @@ set_details()
     }
 
     if (clt_settings.raw_smac != NULL) {
+        tc_log_info(LOG_NOTICE, 0, "output mac:%s", clt_settings.raw_smac);
         convert_str_to_mac(clt_settings.smac, clt_settings.raw_smac);
     } else {
         tc_log_info(LOG_ERR, 0, "no -s argument");
