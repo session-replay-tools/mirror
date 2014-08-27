@@ -20,7 +20,6 @@ typedef struct xcopy_clt_settings {
     char          *pid_file;             /* pid file */
     char          *log_path;             /* error log path */
     int            sig;  
-    uint32_t       max_rss;             /* max memory allowed for mirror */
 
     tc_event_t    *ev[MAX_FD_NUM];
     char           filter[MAX_FILTER_LENGH];

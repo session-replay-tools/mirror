@@ -28,13 +28,6 @@ check_resource_usage(tc_event_timer_t *evt)
     tc_log_info(LOG_NOTICE, 0, "voluntary ctx switches:%ld", usage.ru_nvcsw);
     tc_log_info(LOG_NOTICE, 0, "involuntary ctx switches:%ld", usage.ru_nivcsw);
 
-    if (usage.ru_maxrss > clt_settings.max_rss) {
-        tc_log_info(LOG_WARN, 0, "occupies too much memory, limit:%ld",
-                 clt_settings.max_rss);
-        /* biggest signal number + 1 */
-        tc_over = SIGRTMAX;
-    }
-
     if (evt) {
         tc_event_update_timer(evt, 60000);
     }
