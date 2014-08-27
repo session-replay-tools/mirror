@@ -11,6 +11,7 @@ typedef struct xcopy_clt_settings {
     devices_t      devices;
     tc_pool_t     *pool;
 
+    uint64_t       capture_cnt;
     uint32_t       target_ip;
     unsigned char  smac[ETHER_ADDR_LEN];
     unsigned char  dmac[ETHER_ADDR_LEN];

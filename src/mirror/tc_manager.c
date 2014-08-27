@@ -22,11 +22,9 @@ check_resource_usage(tc_event_timer_t *evt)
     /* total amount of system time used */
     tc_log_info(LOG_NOTICE, 0, "sys  time used:%ld", usage.ru_stime.tv_sec);
 
-    /* maximum resident set size (in kilobytes) */
-    /* only valid since Linux 2.6.32 */
     tc_log_info(LOG_NOTICE, 0, "max memory size:%ld", usage.ru_maxrss);
-    tc_log_info(LOG_NOTICE, 0, "voluntary ctx switches:%ld", usage.ru_nvcsw);
-    tc_log_info(LOG_NOTICE, 0, "involuntary ctx switches:%ld", usage.ru_nivcsw);
+    tc_log_info(LOG_NOTICE, 0, "total captured packets:%lld", 
+            clt_settings.capture_cnt);
 
     if (evt) {
         tc_event_update_timer(evt, 60000);

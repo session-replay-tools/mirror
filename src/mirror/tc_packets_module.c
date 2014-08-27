@@ -108,6 +108,8 @@ pcap_retrieve(unsigned char *args, const struct pcap_pkthdr *pkt_hdr,
     unsigned char       *ip_data; 
     struct ethernet_hdr *ether;
 
+    clt_settings.capture_cnt++;
+
     if (pkt_hdr->len < ETHERNET_HDR_LEN) {
         tc_log_info(LOG_ERR, 0, "recv len is less than:%d", ETHERNET_HDR_LEN);
         return;
