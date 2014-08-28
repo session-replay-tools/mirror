@@ -14,6 +14,7 @@ TC_PID_PATH=
 CC=${CC:-cc}
 TC_OBJS=objs
 
+TC_PFRING=NO
 TC_DEBUG=NO
 
 TC_CC_OPT=
@@ -48,6 +49,7 @@ do
         --with-cc-opt=*)                 TC_CC_OPT="$value"        ;;
         --with-ld-opt=*)                 TC_LD_OPT="$value"        ;;
 
+        --with-pfring)                   TC_PFRING=YES             ;;
         --with-debug)                    TC_DEBUG=YES              ;;
 
         *)
@@ -77,6 +79,7 @@ cat << END
   --with-cpp=PATH                    set C preprocessor pathname
   --with-cc-opt=OPTIONS              set additional C compiler options
   --with-ld-opt=OPTIONS              set additional linker options
+  --with-pfring                      add additional restrictions for using PF_RING(maximum snaplen 8192)
   --with-debug                       enable debug logging
 
 END

@@ -42,6 +42,9 @@ case "$TC_PLATFORM" in
     exit 1
 esac
 
+if [ $TC_PFRING = YES ]; then
+    have=TC_HAVE_PF_RING . auto/have
+fi
 
 if [ $TC_DEBUG = YES ]; then
     have=TC_DEBUG . auto/have

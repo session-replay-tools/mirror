@@ -42,7 +42,11 @@ typedef struct tc_pool_s        tc_pool_t;
 #define TC_CPU_CACHE_LINE  64
 #endif
 
+#ifdef TC_HAVE_PF_RING
+#define PCAP_RCV_BUF_SIZE 8192
+#else
 #define PCAP_RCV_BUF_SIZE 65535
+#endif
 #define IP_BUF_SIZE (PCAP_RCV_BUF_SIZE - ETHERNET_HDR_LEN)
 #define MAX_FILTER_LENGH 4096 
 
