@@ -42,15 +42,19 @@ case "$TC_PLATFORM" in
     exit 1
 esac
 
-if [ $TC_PFRING = YES ]; then
+if [ $TC_PF_RING_DIR != NONE ]; then
     have=TC_HAVE_PF_RING . auto/have
+    CORE_LIBS="$CORE_LIBS $TC_PF_RING_DIR/userland/libpcap/libpcap.a"
+    CORE_LIBS="$CORE_LIBS $TC_PF_RING_DIR/userland/lib/libpfring.a"
+    CORE_LIBS="$CORE_LIBS -lpthread -lnuma"
+else
+    CORE_LIBS="$CORE_LIBS -lpcap"
 fi
 
 if [ $TC_DEBUG = YES ]; then
     have=TC_DEBUG . auto/have
 fi
 
-CORE_LIBS="$CORE_LIBS -lpcap"
 
 . auto/cc/conf
 . auto/headers
