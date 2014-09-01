@@ -7,6 +7,7 @@ typedef struct xcopy_clt_settings {
     unsigned int   mss:16;               /* MSS sent to backend */
     unsigned int   do_daemonize:1;       /* daemon flag */
     int            buffer_size;
+    int            snaplen;    
     char          *raw_device;
     devices_t      devices;
     tc_pool_t     *pool;

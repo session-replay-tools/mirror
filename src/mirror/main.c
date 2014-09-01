@@ -37,7 +37,8 @@ usage(void)
            "               name followed by a unit number, for example eth0 for the first\n"
            "               Ethernet interface.\n");
     printf("-M <num>       MTU value sent to backend (default 1500)\n");
-    printf("-S <num>       MSS value sent back(default 1460)\n");
+    printf("-D <num>       MSS value sent back(default 1460)\n");
+    printf("-S <snaplen>   capture <snaplen> bytes per packet\n");
     printf("-l <file>      save the log information in <file>\n");
     printf("-P <file>      save PID in <file>, only used with -d option\n");
     printf("-h             print this help and exit\n"
@@ -102,7 +103,8 @@ read_args(int argc, char **argv)
          "B:" 
          "o:" /* <device,> */
          "M:" /* MTU sent to backend */
-         "S:" /* mss value sent to backend */
+         "D:" /* mss value sent to backend */
+         "S:" 
          "l:" /* error log file */
          "P:" /* save PID in file */
          "h"  /* help, licence info */
@@ -137,8 +139,11 @@ read_args(int argc, char **argv)
             case 'M':
                 clt_settings.mtu = atoi(optarg);
                 break;
-            case 'S':
+            case 'D':
                 clt_settings.mss = atoi(optarg);
+                break;
+            case 'S':
+                clt_settings.snaplen = atoi(optarg);
                 break;
             case 'h':
                 usage();
@@ -181,6 +186,7 @@ read_args(int argc, char **argv)
                         break;
                     case 'B':
                     case 'M':
+                    case 'D':
                     case 'S':
                         fprintf(stderr, "mirror: option -%c require a number\n",
                                 optopt);
@@ -251,6 +257,10 @@ set_details()
         }
         
         tc_log_info(LOG_WARN, 0, "be caution: no -x argument");
+    }
+
+    if (clt_settings.snaplen > PCAP_RCV_BUF_SIZE) {
+        clt_settings.snaplen = PCAP_RCV_BUF_SIZE;
     }
 
     if (clt_settings.raw_dmac != NULL) {
