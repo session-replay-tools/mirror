@@ -316,7 +316,7 @@ settings_init()
     /* init values */
     clt_settings.mtu = DEFAULT_MTU;
     clt_settings.mss = DEFAULT_MSS;
-    clt_settings.snaplen = TC_PCAP_BUF_SIZE;
+    clt_settings.snaplen = PCAP_RCV_BUF_SIZE;
     clt_settings.buffer_size = TC_PCAP_BUF_SIZE;
     clt_settings.output_if_name = NULL;
 }
