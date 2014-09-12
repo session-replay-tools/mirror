@@ -12,8 +12,6 @@ echo
 cat << END
   mirror path prefix: "$TC_PREFIX"
   mirror binary file: "$TC_SBIN_PATH"
-  mirror configuration prefix: "$TC_CONF_PREFIX"
-  mirror configuration file: "$TC_CONF_PATH"
   mirror pid file: "$TC_PID_PATH"
 END
 

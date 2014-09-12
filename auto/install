@@ -16,18 +16,6 @@ case ".$TC_SBIN_PATH" in
 esac
 
 
-case ".$TC_CONF_PATH" in
-    ./*)
-    ;;
-
-    *)
-        TC_CONF_PATH=$TC_PREFIX/$TC_CONF_PATH
-    ;;
-esac
-
-
-TC_CONF_PREFIX=`dirname $TC_CONF_PATH`
-
 
 case ".$TC_PID_PATH" in
     ./*)
@@ -58,9 +46,6 @@ install:	$TC_OBJS${tc_dirsep}mirror
 		|| mv '\$(DESTDIR)$TC_SBIN_PATH' \
 			'\$(DESTDIR)$TC_SBIN_PATH.old'
 	cp $TC_OBJS/mirror '\$(DESTDIR)$TC_SBIN_PATH'
-
-	test -d '\$(DESTDIR)$TC_CONF_PREFIX' \
-		|| mkdir -p '\$(DESTDIR)$TC_CONF_PREFIX'
 
 	test -d '\$(DESTDIR)`dirname "$TC_PID_PATH"`' \
 		|| mkdir -p '\$(DESTDIR)`dirname "$TC_PID_PATH"`'

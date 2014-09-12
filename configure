@@ -77,12 +77,7 @@ case ".$TC_PREFIX" in
     ;;
 esac
 
-if [ ".$TC_CONF_PREFIX" != "." ]; then
-    have=TC_CONF_PREFIX value="\"$TC_CONF_PREFIX/\"" . auto/define
-fi
-
 have=TC_SBIN_PATH value="\"$TC_SBIN_PATH\"" . auto/define
-have=TC_CONF_PATH value="\"$TC_CONF_PATH\"" . auto/define
 have=TC_PID_PATH value="\"$TC_PID_PATH\"" . auto/define
 have=TC_ERROR_LOG_PATH value="\"$TC_ERROR_LOG_PATH\"" . auto/define
 
