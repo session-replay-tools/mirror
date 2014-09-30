@@ -1,4 +1,5 @@
-# mirror - a tool to mirror packets to a target server
+# mirror
+It is a tool to mirror packets to a target server.
 
 ##Quick start
 * [Download the latest mirror release](https://github.com/session-replay-tools/mirror/releases).
