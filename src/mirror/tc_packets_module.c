@@ -47,7 +47,11 @@ tc_packets_init(tc_event_loop_t *event_loop)
     pcap_if_t           *alldevs, *d;
     struct ethernet_hdr *ether;
 
-    tc_pcap_snd_init(clt_settings.output_if_name, clt_settings.mtu);
+    if (tc_pcap_snd_init(clt_settings.output_if_name, clt_settings.mtu) !=
+            TC_OK) 
+    {
+        return TC_ERR;
+    }
 
     devices = &(clt_settings.devices);
     if (clt_settings.raw_device == NULL) {
