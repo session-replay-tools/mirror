@@ -153,9 +153,6 @@ int
 tc_pcap_snd(unsigned char *frame, size_t len)
 {
     int   send_len;
-    char  pcap_errbuf[PCAP_ERRBUF_SIZE];
-
-    pcap_errbuf[0]='\0';
 
     send_len = pcap_inject(pcap, frame, len);
     if (send_len == -1) {
