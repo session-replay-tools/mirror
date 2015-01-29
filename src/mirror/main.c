@@ -214,6 +214,9 @@ output_for_debug()
     /* print out version info */
     tc_log_info(LOG_NOTICE, 0, "mirror version:%s", VERSION);
 
+#if (HAVE_SET_IMMEDIATE_MODE)
+    tc_log_info(LOG_NOTICE, 0, "HAVE_SET_IMMEDIATE_MODE is true");
+#endif
 #if (TC_HAVE_PF_RING)
     tc_log_info(LOG_NOTICE, 0, "TC_HAVE_PF_RING is true");
 #endif
