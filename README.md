@@ -20,6 +20,8 @@
 
     see -h for more details
 
+##Note
+1. Root privilege or the CAP_NET_RAW capability(e.g. setcap CAP_NET_RAW=ep mirror) is required 
 ##Release History
 + 2014.09  v1.0    mirror released
 
