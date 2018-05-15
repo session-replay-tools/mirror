@@ -129,7 +129,6 @@ pcap_retrieve(unsigned char *args, const struct pcap_pkthdr *pkt_hdr,
         if ((size_t) l2_len > ETHERNET_HDR_LEN) {
             ip_data = get_ip_data(pcap, frame, pkt_hdr->len, &l2_len); 
         } else if (l2_len == 0) {
-            ip_pack_len = 
             /* tunnel frames without ethernet header */
             special_disp_packet(ip_data, pkt_hdr->len);
             return;
@@ -151,7 +150,12 @@ pcap_retrieve(unsigned char *args, const struct pcap_pkthdr *pkt_hdr,
         fill_frame(ether, clt_settings.smac, clt_settings.dmac);
         if (clt_settings.target_ip) {
             ip = (tc_iph_t *) ip_data;
-            ip->daddr = clt_settings.target_ip;
+            if (ip->version == 4) {
+                ip->daddr = clt_settings.target_ip;
+            } else {
+                tc_log_info(LOG_INFO, 0, "ip version:%d", ip->version);
+                return;
+            }
         }
         ret = tc_pcap_snd(frame, ip_pack_len + ETHERNET_HDR_LEN);
         if (ret == TC_ERR) {
@@ -189,6 +193,10 @@ special_disp_packet(unsigned char *packet, int ip_rcv_len)
     tc_tcph_t *tcp;
 
     ip   = (tc_iph_t *) packet;
+
+    if (ip->version != 4 || ip->protocol != IPPROTO_TCP) { 
+        return TC_ERR;
+    }
 
     size_ip     = ip->ihl << 2;
     tcp  = (tc_tcph_t *) ((char *) ip + size_ip);
