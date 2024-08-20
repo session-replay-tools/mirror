@@ -1,36 +1,52 @@
-## A tool to mirror packets to a target server
+## A Tool for Mirroring Packets to a Target Server
 
-## Quick start
+## Quick Start
 * [Download the latest mirror release](https://github.com/session-replay-tools/mirror/releases).
 * Clone the repo: `git clone git://github.com/session-replay-tools/mirror.git`.
 
-## Getting mirror installed 
-1. cd mirror
-2. ./configure 
-  - choose appropriate configure options if needed
-3. make
-4. make install
+## Installing `mirror`
+1. Navigate to the `mirror` directory:
+   
+   `cd mirror`
 
-### Configure Options for mirror
-     --with-pfring=PATH  set path to PF_RING library sources
-     --with-debug        compile mirror with debug support (saved in a log file)
+2. Run the configuration script:
+   
+   `./configure`
+
+   Optionally, specify any necessary configuration options.
+
+3. Compile the program:
+   
+   `make`
+
+4. Install the compiled program:
+   
+   `make install`
+
+
+
+### Configure Options for `mirror`
+     --with-pfring=PATH  Set the path to PF_RING library sources  
+     --with-debug        Compile mirror with debug support (saved in a log file)
 
 ## Running 
-    ./mirror -s sourceMacAddress -t targetMacAddress -F <filter> -o <device> -i <device> -x destIPAddress -d 
 
-    see -h for more details
+`./mirror -s sourceMacAddress -t targetMacAddress -F <filter> -o <device> -i <device> -x destIPAddress -d`
+
+see -h for more details
 
 ## Note
 1. Root privilege or the CAP_NET_RAW capability(e.g. setcap CAP_NET_RAW=ep mirror) is required 
 
 ## Release History
-+ 2014.09  v1.0    mirror released
++ 2014.09  v1.0    `mirror` released
++ 2024.09  v1.0    Document normalization
 
 
-## Bugs and feature requests
+## Bugs and Feature Requests
 Have a bug or a feature request? [Please open a new issue](https://github.com/session-replay-tools/mirror/issues). Before opening any issue, please search for existing issues.
 
 
-## Copyright and license
+## Copyright and License
 
-Copyright 2014 under [the BSD license](LICENSE).
+Copyright 2024 under [the BSD license](LICENSE).
